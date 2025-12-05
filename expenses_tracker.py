@@ -53,3 +53,8 @@ def get_user_expense():
             print("Invalid category. Please try again!")
 
         break
+
+def save_expense_to_file(expense: Expense,expense_file_path):
+    print(f"Saving user Expense: {expense} to {expense_file_path}")
+    with open(expense_file_path,"a") as f:
+        f.write(f"{expense.name},{expense.amount},{expense.category}\n")
