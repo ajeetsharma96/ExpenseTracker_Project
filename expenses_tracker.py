@@ -14,6 +14,8 @@ def main():
 
      budget=float(input("Enter your budget: "))
 
+     print(f"\nNice {username} !\nEnter your Expense Details\n")
+
     # Create file if not exists
      if not os.path.exists(expense_file_path):
         open(expense_file_path, "w").close()
@@ -31,11 +33,9 @@ def main():
  
 
 def get_user_expense():
-    print(f"Getting user expense: ")
 
     # expense name
-    expense_name=input("Enter expense name: ")
-    print(f"You have entered {expense_name} ")
+    expense_name=input("\nEnter expense name: ")
     
     # expense amount
     expense_amount=float(input("Enter expense amount: "))
@@ -90,15 +90,18 @@ def summarize_expense(expense_file_path,budget):
             else:
                 amount_by_category[key] = expense.amount
 
-        print("Expenses by Category: ")
+        print("---------------------------------------")
+        print(green("Expenses by Category: "))
         for key,amount in amount_by_category.items():
-            print(f"  {key}: ${amount: .2f}")
-
+            print(yellow(f"  -> {key}: ${amount: .2f}"))
+        print("---------------------------------------")
         total_spent = sum([ex.amount for ex in expenses])
-        print(f"You've spent ${total_spent: .2f} this month!")
+        print(green(f"You've spent ${total_spent: .2f} this month!"))
+        print("---------------------------------------")
 
         remaining_budget=budget - total_spent
-        print(f"Budget remaining: ${remaining_budget: .2f}")
+        print(green(f"Budget remaining: ${remaining_budget: .2f}"))
+        print("---------------------------------------")
 
         now=datetime.datetime.now()
         days_in_month=calendar.monthrange(now.year,now.month)[1]
@@ -117,6 +120,16 @@ def green(text):
             expenses.append(line_expense)
         print(expenses)
              
+
+def yellow(text):
+    return f"\033[93m{text}\033[0m"
+
+    lines= f.readlines()
+    for line in lines:
+        expense_name,expense_amount,expense_category=line.strip().split(",")
+        line_expense=Expense(name=expense_name,amount=float(expense_amount),category=expense_category)
+        expenses.append(line_expense)
+    print(expenses)
 
 
 
